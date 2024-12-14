@@ -4,14 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.skilldistillery.film.data.FilmDAO;
+import com.skilldistillery.film.entities.Film;
 
 @Controller
 public class FilmController {
 	
 	@Autowired
-	private FilmDAO FilmDAO;
+	private FilmDAO filmDAO;
 
 	@RequestMapping(path = {"/", "home.do"})
 	public String goHome(Model model) {
@@ -25,8 +27,10 @@ public class FilmController {
 		return"newfilm";
 	}
 	
-	@RequestMapping(path = {"result.do"})
-	public String goResult(Model model) {
+	@RequestMapping(path = {"idsearch.do"})
+	public String goResult(Model model, @RequestParam("id") int id) {
+		Film film = filmDAO.findFilmById(id);
+		model.addAttribute("film", film);
 	//	return "WEB-INF/home.jsp";
 		return"result";
 	}

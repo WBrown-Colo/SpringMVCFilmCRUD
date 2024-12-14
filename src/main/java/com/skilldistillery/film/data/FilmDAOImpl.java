@@ -142,7 +142,18 @@ public class FilmDAOImpl implements FilmDAO {
 		film.setTitle(rs.getString("title"));
 		film.setDescription(rs.getString("description"));
 		film.setLength(rs.getInt("length"));
-		film.setRating(rs.getString("raing"));
-		return null;
+		film.setRating(rs.getString("rating"));
+		return film;
+	}
+	
+
+	static {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		}
+		catch (ClassNotFoundException e) {
+			System.err.println("Unable to load database driver:");
+			e.printStackTrace();
+		}
 	}
 }
