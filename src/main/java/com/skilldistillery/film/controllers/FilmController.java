@@ -11,11 +11,23 @@ import com.skilldistillery.film.data.FilmDAO;
 public class FilmController {
 	
 	@Autowired
-	private FilmDAO filmDAO;
+	private FilmDAO FilmDAO;
 
 	@RequestMapping(path = {"/", "home.do"})
 	public String goHome(Model model) {
 	//	return "WEB-INF/home.jsp";
 		return"home";
+	}
+	
+	@RequestMapping(path = {"newfilm.do"})
+	public String goNewFilm(Model model) {
+	//	return "WEB-INF/home.jsp";
+		return"newfilm";
+	}
+	
+	@RequestMapping(path = {"result.do"})
+	public String goResult(Model model) {
+	//	return "WEB-INF/home.jsp";
+		return"result";
 	}
 }
