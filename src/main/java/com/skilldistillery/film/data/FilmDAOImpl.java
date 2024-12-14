@@ -2,8 +2,10 @@ package com.skilldistillery.film.data;
 
 import java.util.List;
 
-import com.skilldistillery.film.entities.Film;
+import org.springframework.stereotype.Component;
 
+import com.skilldistillery.film.entities.Film;
+@Component
 	public class FilmDAOImpl implements FilmDAO {
 
 		@Override
