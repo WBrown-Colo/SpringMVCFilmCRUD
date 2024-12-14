@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1>Welcome to our Film Site</h1>
-<form action = "idsearch.do">
+<form action = "result.do">
 	<fieldset>
 		<legend><h3>Find Film by ID</h3></legend>
 		<label for="id">Enter ID:</label>
@@ -17,7 +17,7 @@
 		<input type="submit" value="Submit">
 	</fieldset>
 </form>
-<form action = "keywordsearch.do">
+<form action = "result.do">
 	<fieldset>
 		<legend><h3>Find Film by Keyword Search</h3></legend>
 		<label for="id">Enter Keyword:</label>

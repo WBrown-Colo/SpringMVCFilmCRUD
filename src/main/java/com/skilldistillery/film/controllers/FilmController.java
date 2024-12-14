@@ -24,4 +24,10 @@ public class FilmController {
 	//	return "WEB-INF/home.jsp";
 		return"newfilm";
 	}
+	
+	@RequestMapping(path = {"result.do"})
+	public String goResult(Model model) {
+	//	return "WEB-INF/home.jsp";
+		return"result";
+	}
 }
