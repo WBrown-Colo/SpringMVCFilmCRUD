@@ -25,6 +25,7 @@ public class FilmController {
 	
 	@RequestMapping(path = {"newfilm.do"})
 	public String goNewFilm(Model model) {
+//		model.addAttribute("film", );
 	//	return "WEB-INF/home.jsp";
 		return"newfilm";
 	}
@@ -42,6 +43,7 @@ public class FilmController {
 		List<Film> film = filmDAO.findFilmsByKeyword(keyword);
 		model.addAttribute("film", film);
 	//	return "WEB-INF/home.jsp";
-		return"result";
+//		return"result";
+		return"keyword";
 	}
 }

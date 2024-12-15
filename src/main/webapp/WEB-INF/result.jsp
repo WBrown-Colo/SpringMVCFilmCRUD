@@ -9,7 +9,7 @@
 <title>MVC Film Site</title>
 </head>
 <body>
-<h1>Search Result</h1>
+<h1>Search Result</h1> 
 		<c:choose>
 		<c:when test="${! empty film }">
 		  <ul>
