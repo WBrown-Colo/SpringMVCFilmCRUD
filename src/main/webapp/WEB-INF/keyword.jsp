@@ -28,6 +28,7 @@
 					<li><strong>Description:</strong> ${film.description}</li>
 					<li><strong>Length:</strong> ${film.length}</li>
 					<li><strong>Rating:</strong> ${film.rating}</li>
+					<li><strong>Actors:</strong> ${film.actors}</li>
 				</c:forEach>
 			</ul>
 		</c:when>
