@@ -61,13 +61,13 @@ public class FilmController {
 		List<Film> films = filmDAO.findFilmsByKeyword(keyword);
 		if (films.isEmpty()) {
 			model.addAttribute("film", films);
-			model.addAttribute("message", "film found for kewyord search: " + keyword);
+			model.addAttribute("message", "film found for keyword search: " + keyword);
 		} else {
 			model.addAttribute("message", "film not found for keyword search: " + keyword);
 		}
 		
 		// return "WEB-INF/home.jsp";
-		return "keywordresult";
+		return "keyword";
 	}
 	
 	@RequestMapping(path = "addfilm.do", method = RequestMethod.POST)
