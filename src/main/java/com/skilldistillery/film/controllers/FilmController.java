@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestMethod;
+=======
+>>>>>>> f88399eeb333d6aafb697c2c866f7c7f146c65b0
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.skilldistillery.film.data.FilmDAO;
@@ -28,6 +31,7 @@ public class FilmController {
 	// Displays Form to add new Film
 	@RequestMapping(path = { "newfilm.do" })
 	public String goNewFilm(Model model) {
+<<<<<<< HEAD
 		// return "WEB-INF/home.jsp";
 		return "newfilm";
 	}
@@ -84,4 +88,39 @@ public class FilmController {
 		return "result";
 	}
 	
+=======
+//		model.addAttribute("film", );
+	//	return "WEB-INF/home.jsp";
+		return"newfilm";
+	}
+	
+	@RequestMapping(path = {"idsearch.do"})
+	public String goResult(Model model, @RequestParam("id") int id) {
+		Film film = filmDAO.findFilmById(id);
+		model.addAttribute("film", film);
+	//	return "WEB-INF/home.jsp";
+		return"result";
+	}
+	
+	@RequestMapping(path = {"keywordsearch.do"})
+	public String goKeywordResult(Model model, @RequestParam("keyword") String keyword) {
+		List<Film> film = filmDAO.findFilmsByKeyword(keyword);
+		model.addAttribute("film", film);
+	//	return "WEB-INF/home.jsp";
+//		return"result";
+		return"keyword";
+	}
+	
+	@RequestMapping(path = {"addnewfilm.do"})
+	public String addNewFilm(Model model, @RequestParam("title") String title,
+										  @RequestParam("description") String description,
+										  @RequestParam("length") int length,
+										  @RequestParam("rating") String rating) {
+	model.addAttribute("title", title);					
+	model.addAttribute("description", description);					
+	model.addAttribute("length", length);					
+	model.addAttribute("rating", rating);
+	return"addnewfilm";
+			}
+>>>>>>> f88399eeb333d6aafb697c2c866f7c7f146c65b0
 }
