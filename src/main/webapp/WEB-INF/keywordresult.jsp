@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>MVC Film Site</title>
+<title>Film Keyword Search</title>
 </head>
 <body>
-	<h1>Result</h1>
+	<h1>Keyword Search Results</h1>
 
 	<!-- Message -->
 
@@ -17,7 +17,7 @@
 	<!-- Film Details. With Conditional Tag -->
 	<c:choose>
 		<c:when test="${not empty film}">
-			<h2>Film Details:</h2>
+			<h2>Films Found:</h2>
 			<ul>
 				<li><strong>ID:</strong> ${film.id}</li>
 				<li><strong>Title:</strong> ${film.title}</li>
@@ -27,7 +27,7 @@
 			</ul>
 		</c:when>
 		<c:otherwise>
-		<p>No Film found with selected ID.</p>
+			<p>No Film found with selected ID.</p>
 		</c:otherwise>
 	</c:choose>
 </body>

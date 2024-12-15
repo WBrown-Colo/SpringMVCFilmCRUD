@@ -10,13 +10,16 @@
 <h1>Add A New Film</h1>
 
 <!-- ADD ACTION -->
-<fieldset><form action="" method="get">
+<fieldset><form action="addfilm.do" method="post">
 <label for="title"><strong>Title: </strong></label>
-<input name="title" id="title"><br>
+<input type ="text" name="title" id="title"><br>
+
 <label for="description"><strong>Description: </strong></label>
 <input name="description" id="description"><br>
+
 <label for="length"><strong>Length (in minutes): </strong></label>
-<input name="length" id="length"><br>
+<input type="number" name="length" id="length"><br>
+
 <label for="rating"><strong>Rating: </strong></label>
 <select>
 <!-- <optgroup label="Choice [g,pg,pg-13,r,nc-17]"> -->
@@ -27,7 +30,7 @@
 <option value="nc-17">NC-17</option>
 <!-- </optgroup> -->
 </select><br>
-<input type="submit" value="Submit">
+<input type="submit" value="Add Film">
 </form>
 </fieldset>
 

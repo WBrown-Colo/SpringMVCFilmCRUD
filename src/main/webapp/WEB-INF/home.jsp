@@ -9,20 +9,20 @@
 </head>
 <body>
 <h1>Welcome to our Film Site</h1>
-<form action = "result.do">
+<form action = "findfilmbyid.do" method="get">
 	<fieldset>
 		<legend><h3>Find Film by ID</h3></legend>
 		<label for="id">Enter ID:</label>
-		<input name="id" id="id" value="">
-		<input type="submit" value="Submit">
+		<input type="number" name="id" id="id">
+		<input type="submit" value="Search">
 	</fieldset>
 </form>
-<form action = "result.do">
+<form action = "findfilmbykeyword.do">
 	<fieldset>
 		<legend><h3>Find Film by Keyword Search</h3></legend>
-		<label for="id">Enter Keyword:</label>
-		<input name="id" id="id" value="">
-		<input type="submit" value="Submit">
+		<label for="keyword">Enter Keyword:</label>
+		<input type="text" name="keyword" id="keyword" value="">
+		<button type="submit">Search</button>
 		
 	</fieldset>
 </form>
