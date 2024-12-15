@@ -46,4 +46,16 @@ public class FilmController {
 //		return"result";
 		return"keyword";
 	}
+	
+	@RequestMapping(path = {"addnewfilm.do"})
+	public String addNewFilm(Model model, @RequestParam("title") String title,
+										  @RequestParam("description") String description,
+										  @RequestParam("length") int length,
+										  @RequestParam("rating") String rating) {
+	model.addAttribute("title", title);					
+	model.addAttribute("description", description);					
+	model.addAttribute("length", length);					
+	model.addAttribute("rating", rating);
+	return"addnewfilm";
+			}
 }

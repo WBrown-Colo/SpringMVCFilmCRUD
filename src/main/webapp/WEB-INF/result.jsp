@@ -12,12 +12,9 @@
 <h1>Search Result</h1> 
 		<c:choose>
 		<c:when test="${! empty film }">
-		  <ul>
-			<li>${film.title }</li>
-			<li>${film.description }</li>
-			<li>${film.length }</li>
-			<li>${film.rating }</li>
-		  </ul>
+		  <strong>Film ID: </strong>${film.id }<br>
+			<strong>Title: </strong>${film.title } | <strong>Description: </strong>${film.description }<br>
+			<strong>Length: </strong>${film.length } minutes | <strong>Rating: </strong>${film.rating }
 		</c:when>
 		<c:otherwise>
 		  <p>No film found</p>
