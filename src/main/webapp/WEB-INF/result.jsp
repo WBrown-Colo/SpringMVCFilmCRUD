@@ -27,6 +27,11 @@
 				<li><strong>Rating:</strong> ${film.rating}</li>
 				<li><strong>Actors:</strong> ${film.actors}</li>
 			</ul>
+			<form action="">
+			Delete: <input type="radio" name="delete" value="delete"><br>
+			Edit: <input type="radio" name="edit" value="edit"><br>
+			<input type="submit" value="Submit">
+			</form>
 		</c:when>
 		<c:otherwise>
 		<p>No Film found with selected ID.</p>

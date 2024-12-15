@@ -29,8 +29,14 @@
 					<li><strong>Length:</strong> ${film.length}</li>
 					<li><strong>Rating:</strong> ${film.rating}</li>
 					<li><strong>Actors:</strong> ${film.actors}</li>
+			<form action="">
+			Delete:<input type="radio" name="delete" value="delete"><br>
+			Edit: <input type="radio" name="edit" value="edit"><br>
+			<input type="submit" value="Submit">
+			</form>
 				</c:forEach>
 			</ul>
+			
 		</c:when>
 		<c:otherwise>
 			<p>No Films found for the given keyword.</p>

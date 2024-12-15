@@ -10,8 +10,8 @@
 <body>
 <jsp:include page="homebutton.jsp"/>
 <h1>New Film Confirmation</h1>
-<%-- <p>${message }</p>
-<p>${film }</p> --%>
+<p>${message }</p>
+<p>${film }</p> 
 <c:choose>
 <c:when test="${not empty film }">
 
