@@ -146,7 +146,7 @@ public class Film {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, language, languageId, length, rating, releaseYear, rentalDuration,
+		return Objects.hash(actors, description, id, language, languageId, length, rating, releaseYear, rentalDuration,
 				rentalRate, replacementCost, specialFeatures, title);
 	}
 
@@ -159,7 +159,7 @@ public class Film {
 		if (getClass() != obj.getClass())
 			return false;
 		Film other = (Film) obj;
-		return Objects.equals(description, other.description) && id == other.id
+		return Objects.equals(actors, other.actors) && Objects.equals(description, other.description) && id == other.id
 				&& Objects.equals(language, other.language) && languageId == other.languageId && length == other.length
 				&& Objects.equals(rating, other.rating) && releaseYear == other.releaseYear
 				&& rentalDuration == other.rentalDuration
@@ -173,7 +173,7 @@ public class Film {
 		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", releaseYear=" + releaseYear
 				+ ", languageId=" + languageId + ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate
 				+ ", length=" + length + ", replacementCost=" + replacementCost + ", rating=" + rating
-				+ ", specialFeatures=" + specialFeatures + ", language=" + language + ", actors=" + actors +"]";
+				+ ", specialFeatures=" + specialFeatures + ", language=" + language + ", actors=" + actors + "]";
 	}
 	
 }

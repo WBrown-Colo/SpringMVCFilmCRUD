@@ -172,6 +172,7 @@ public class FilmDAOImpl implements FilmDAO {
 	@Override
 	public List<Actor> findActorsByFilmId(int filmId) {
 		List<Actor> cast = new ArrayList<>();
+		Actor actor = null;
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, user, pass);
@@ -184,12 +185,15 @@ public class FilmDAOImpl implements FilmDAO {
 
 			while (rs.next()) {
 				int id = rs.getInt(1);
-				String firstName = rs.getString(2);
-				String lastName = rs.getString(3);
-				Actor actor = new Actor(id, firstName, lastName);
+				String firstName = rs.getString("first_name");
+				String lastName = rs.getString("last_name");
+				actor = new Actor(id, firstName, lastName);
 
 				cast.add(actor);
 			}
+			rs.close();
+			stmt.close();
+			conn.close();
 		}
 
 		catch (SQLException sqle) {
