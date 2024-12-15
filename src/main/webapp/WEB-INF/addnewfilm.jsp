@@ -7,6 +7,7 @@
 <title>MVC Film Site</title>
 </head>
 <body>
+<jsp:include page="homebutton.jsp"/>
 <h1>New Film Confirmation</h1>
 <p>You added a film to the database!</p>
 <strong>Title: </strong>${title } | <strong>Description: </strong>${description }<br>
