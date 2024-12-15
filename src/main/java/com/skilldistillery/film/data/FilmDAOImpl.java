@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
 @Component
@@ -54,6 +55,11 @@ public class FilmDAOImpl implements FilmDAO {
 			keyword = "%" + keyword + "%";
 			stmt.setString(1, "%" + keyword + "%");
 			stmt.setString(2, "%" + keyword + "%");
+			
+			//TEST by Will - Keyword search not working
+//			stmt.setString(1, keyword);
+//			stmt.setString(2, keyword);
+			
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
 					films.add(populateFilmFromResultSet(rs));
@@ -156,4 +162,38 @@ public class FilmDAOImpl implements FilmDAO {
 			e.printStackTrace();
 		}
 	}
+	
+//______________________________________________________________________________________________________________________
+	
+	@Override
+	public List<Actor> findActorsByFilmId(int filmId) {
+		List<Actor> actorList = new ArrayList<>();
+
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+			String sql = "SELECT actor.id, first_name, last_name" + " FROM actor"
+					+ " JOIN film_actor ON actor.id = film_actor.actor_id" + " WHERE film_actor.film_id = ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, filmId);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String firstName = rs.getString(2);
+				String lastName = rs.getString(3);
+				Actor actor = new Actor(id, firstName, lastName);
+
+				actorList.add(actor);
+			}
+		}
+
+		catch (SQLException sqle) {
+			System.err.println("Error getting actor " + filmId);
+			sqle.printStackTrace();
+		}
+
+		return actorList;
+	}
+	
 }

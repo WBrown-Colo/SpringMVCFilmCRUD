@@ -7,6 +7,7 @@
 <title>MVC Film Site</title>
 </head>
 <body>
+<jsp:include page="homebutton.jsp"/>
 <h1>Add A New Film</h1>
 
 <!-- ADD ACTION -->

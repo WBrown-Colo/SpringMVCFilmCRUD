@@ -8,6 +8,7 @@
 <title>MVC Film Site</title>
 </head>
 <body>
+<jsp:include page="homebutton.jsp"/>
 <h1>New Film Confirmation</h1>
 <%-- <p>${message }</p>
 <p>${film }</p> --%>

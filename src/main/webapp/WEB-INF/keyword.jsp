@@ -8,6 +8,7 @@
 <title>Film Keyword Search</title>
 </head>
 <body>
+<jsp:include page="homebutton.jsp"/>
 	<h1>Keyword Search Results</h1>
 
 	<!-- Message -->
