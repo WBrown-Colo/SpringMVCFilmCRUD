@@ -22,7 +22,7 @@ public class Actor {
 	public Actor() {
 	}
 	
-	public Actor(String firstName, String lastName) {
+	public Actor(int id, String firstName, String lastName) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
