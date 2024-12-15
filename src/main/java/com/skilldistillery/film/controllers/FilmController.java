@@ -81,7 +81,7 @@ public class FilmController {
 		}
 		
 		// return "WEB-INF/home.jsp";
-		return "result";
+		return "addnewfilm";
 	}
 	
 }
