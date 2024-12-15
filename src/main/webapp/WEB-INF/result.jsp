@@ -8,6 +8,7 @@
 <title>MVC Film Site</title>
 </head>
 <body>
+<jsp:include page="homebutton.jsp"/>
 	<h1>Result</h1>
 
 	<!-- Message -->

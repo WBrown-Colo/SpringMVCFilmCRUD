@@ -7,6 +7,7 @@
 <title>MVC Film Site</title>
 </head>
 <body>
+<jsp:include page="homebutton.jsp"/>
 <h1>Add A New Film</h1>
 
 <!-- ADD ACTION -->
@@ -21,13 +22,13 @@
 <input type="number" name="length" id="length"><br>
 
 <label for="rating"><strong>Rating: </strong></label>
-<select>
+<select name="rating" id="rating">
 <!-- <optgroup label="Choice [g,pg,pg-13,r,nc-17]"> -->
-<option value="g">G</option>
-<option value="pg">PG</option>
-<option value="pg-13">PG-13</option>
-<option value="r">R</option>
-<option value="nc-17">NC-17</option>
+<option value="G">G</option>
+<option value="PG">PG</option>
+<option value="PG-13">PG-13</option>
+<option value="R">R</option>
+<option value="NC-17">NC-17</option>
 <!-- </optgroup> -->
 </select><br>
 <input type="submit" value="Add Film">
