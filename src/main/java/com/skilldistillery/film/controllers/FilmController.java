@@ -33,14 +33,12 @@ public class FilmController {
 		return "newfilm";
 	}
 
-
 	// Result Page
 	@RequestMapping(path = { "result.do" })
 	public String goResult(Model model) {
 		// return "WEB-INF/home.jsp";
 		return "result";
 	}
-
 
 	// Passes data to JSP
 	@RequestMapping(path = "findfilmbyid.do", method = RequestMethod.GET)
@@ -52,25 +50,27 @@ public class FilmController {
 		} else {
 			model.addAttribute("message", "film not found");
 		}
-		
+
 		// return "WEB-INF/home.jsp";
 		return "result";
 	}
-	
+
 	@RequestMapping(path = "findfilmbykeyword.do", method = RequestMethod.GET)
 	public String findFilmByKeyword(@RequestParam("keyword") String keyword, Model model) {
 		List<Film> films = filmDAO.findFilmsByKeyword(keyword);
-		if (films.isEmpty()) {
-			model.addAttribute("film", films);
-			model.addAttribute("message", "film found for keyword search: " + keyword);
-		} else {
-			model.addAttribute("message", "film not found for keyword search: " + keyword);
-		}
+		System.out.println("Films retrieved: " + films);
 		
+		if (films.isEmpty()) {
+			model.addAttribute("message", "film not found for keyword search: " + keyword);
+		} else {
+			model.addAttribute("films", films);
+			model.addAttribute("message", "film found for keyword search: " + keyword);
+		}
+
 		// return "WEB-INF/home.jsp";
 		return "keyword";
 	}
-	
+
 	@RequestMapping(path = "addfilm.do", method = RequestMethod.POST)
 	public String addFilm(Film film, Model model) {
 		Film filmAdded = filmDAO.addFilm(film);
@@ -80,9 +80,9 @@ public class FilmController {
 		} else {
 			model.addAttribute("message", "film not added");
 		}
-		
+
 		// return "WEB-INF/home.jsp";
 		return "addnewfilm";
 	}
-	
+
 }

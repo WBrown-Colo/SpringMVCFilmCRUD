@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +19,7 @@
 
 	<!-- Film Details. With Conditional Tag -->
 	<c:choose>
-		<c:when test="${not empty film}">
+		<c:when test="${not empty films}">
 			<h2>Films Found:</h2>
 			<ul>
 				<c:forEach var="film" items="${films}">
@@ -30,7 +32,7 @@
 			</ul>
 		</c:when>
 		<c:otherwise>
-			<p>No Film found with selected ID.</p>
+			<p>No Films found for the given keyword.</p>
 		</c:otherwise>
 	</c:choose>
 </body>
