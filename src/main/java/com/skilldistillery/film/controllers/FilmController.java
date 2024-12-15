@@ -85,5 +85,30 @@ public class FilmController {
 		return "addnewfilm";
 	}
 	
+	@RequestMapping(path = "addfilm.do", method = RequestMethod.POST)
+	public String deleteFilm(@RequestParam("id") int id, Model model) {
+		boolean deleted = filmDAO.deleteFilm(id);
+		if (deleted) {
+			model.addAttribute("message", "film deleted successfully");
+		} else {
+			model.addAttribute("message", "film could not be deleted");
+		}
 
+		// return "WEB-INF/home.jsp";
+		return "result";
+	}
+
+	@RequestMapping(path = "addfilm.do", method = RequestMethod.POST)
+	public String editFilm(Film film, Model model) {
+		boolean updated = filmDAO.updateFilm(film);
+		if (updated) {
+			model.addAttribute("message", "film updated successfully");
+		} else {
+			model.addAttribute("message", "film could not be updated");
+		}
+
+		// return "WEB-INF/home.jsp";
+		return "result";
+	}
+	
 }

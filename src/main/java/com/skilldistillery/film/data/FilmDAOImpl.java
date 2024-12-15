@@ -55,11 +55,11 @@ public class FilmDAOImpl implements FilmDAO {
 			keyword = "%" + keyword + "%";
 			stmt.setString(1, "%" + keyword + "%");
 			stmt.setString(2, "%" + keyword + "%");
-			
-			//TEST by Will - Keyword search not working
+
+			// TEST by Will - Keyword search not working
 //			stmt.setString(1, keyword);
 //			stmt.setString(2, keyword);
-			
+
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
 					films.add(populateFilmFromResultSet(rs));
@@ -88,9 +88,10 @@ public class FilmDAOImpl implements FilmDAO {
 			int newRows = stmt.executeUpdate();
 			if (newRows > 0) {
 
-				ResultSet keys = stmt.getGeneratedKeys();
-				if (keys.next()) {
-					film.setId(keys.getInt(1));
+				try (ResultSet keys = stmt.getGeneratedKeys()) {
+					if (keys.next()) {
+						film.setId(keys.getInt(1));
+					}
 				}
 			}
 		} catch (SQLException e) {
@@ -135,6 +136,7 @@ public class FilmDAOImpl implements FilmDAO {
 			int newRows = stmt.executeUpdate();
 			return newRows > 0;
 		} catch (SQLException e) {
+			System.err.println("Error Deleting Film: " + e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
@@ -149,26 +151,24 @@ public class FilmDAOImpl implements FilmDAO {
 		film.setDescription(rs.getString("description"));
 		film.setLength(rs.getInt("length"));
 		film.setRating(rs.getString("rating"));
-		
+
 		List<Actor> cast = findActorsByFilmId(film.getId());
 		film.setActors(cast);
-		
+
 		return film;
 	}
-	
 
 	static {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-		}
-		catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			System.err.println("Unable to load database driver:");
 			e.printStackTrace();
 		}
 	}
-	
+
 //______________________________________________________________________________________________________________________
-	
+
 	@Override
 	public List<Actor> findActorsByFilmId(int filmId) {
 		List<Actor> cast = new ArrayList<>();
@@ -203,5 +203,5 @@ public class FilmDAOImpl implements FilmDAO {
 
 		return cast;
 	}
-	
+
 }
