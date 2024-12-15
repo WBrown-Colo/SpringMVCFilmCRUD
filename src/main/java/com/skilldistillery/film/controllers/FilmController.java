@@ -85,7 +85,7 @@ public class FilmController {
 		return "addnewfilm";
 	}
 	
-	@RequestMapping(path = "addfilm.do", method = RequestMethod.POST)
+	@RequestMapping(path = "deletefilm.do", method = RequestMethod.POST)
 	public String deleteFilm(@RequestParam("id") int id, Model model) {
 		boolean deleted = filmDAO.deleteFilm(id);
 		if (deleted) {
@@ -98,7 +98,7 @@ public class FilmController {
 		return "result";
 	}
 
-	@RequestMapping(path = "addfilm.do", method = RequestMethod.POST)
+	@RequestMapping(path = "editfilm.do", method = RequestMethod.POST)
 	public String editFilm(Film film, Model model) {
 		boolean updated = filmDAO.updateFilm(film);
 		if (updated) {
