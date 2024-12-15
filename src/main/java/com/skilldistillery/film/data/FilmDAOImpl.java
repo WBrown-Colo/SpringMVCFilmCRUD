@@ -149,6 +149,10 @@ public class FilmDAOImpl implements FilmDAO {
 		film.setDescription(rs.getString("description"));
 		film.setLength(rs.getInt("length"));
 		film.setRating(rs.getString("rating"));
+		
+		List<Actor> cast = findActorsByFilmId(film.getId());
+		film.setActors(cast);
+		
 		return film;
 	}
 	
@@ -167,7 +171,7 @@ public class FilmDAOImpl implements FilmDAO {
 	
 	@Override
 	public List<Actor> findActorsByFilmId(int filmId) {
-		List<Actor> actorList = new ArrayList<>();
+		List<Actor> cast = new ArrayList<>();
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, user, pass);
@@ -184,7 +188,7 @@ public class FilmDAOImpl implements FilmDAO {
 				String lastName = rs.getString(3);
 				Actor actor = new Actor(id, firstName, lastName);
 
-				actorList.add(actor);
+				cast.add(actor);
 			}
 		}
 
@@ -193,7 +197,7 @@ public class FilmDAOImpl implements FilmDAO {
 			sqle.printStackTrace();
 		}
 
-		return actorList;
+		return cast;
 	}
 	
 }
