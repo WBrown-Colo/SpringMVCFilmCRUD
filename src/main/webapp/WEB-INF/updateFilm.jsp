@@ -13,7 +13,7 @@
 		<p style="color: green;">${error}</p>
 	</c:if>
 
-	<form action="editFilm.do" method="post">
+	<form action="editFilm.do" method="POST">
 		<input type="hidden" name="id" value="${film.id}" />
 		<p>
 			Title: <input type="text" name="title" value="${film.title}" />

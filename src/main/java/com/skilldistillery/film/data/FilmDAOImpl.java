@@ -78,7 +78,7 @@ public class FilmDAOImpl implements FilmDAO {
 //			stmt.setString(2, keyword);
 
 			while (rs.next()) {
-				Film film = new Film();
+				
 				films.add(populateFilmFromResultSet(rs));
 
 			}

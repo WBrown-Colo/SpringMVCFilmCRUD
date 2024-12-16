@@ -11,7 +11,7 @@
 	<jsp:include page="homebutton.jsp" />
 	<h1>Enter Film ID To Delete From Database</h1>
 	
-	<form action="deleteFilm" method="post">
+	<form action="deleteFilm.do" method="post">
 	<label for="id">Film ID: </label>
 	<input type="text" name="id" id="id" />
 	<button> type="submit">Delete Film</button>

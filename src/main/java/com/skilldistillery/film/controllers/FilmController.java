@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -89,25 +88,16 @@ public class FilmController {
 	}
 	
 
-	@RequestMapping(path = "editFilm.do", method = RequestMethod.POST)
-	public ModelAndView editFilmForm(@ModelAttribute("film") Film film) {
-		ModelAndView mv = new ModelAndView();
-		Film editedFilm;
+	@PostMapping(path = {"editFilm.do"})
+	public String updatedFilm(Film film, Model model) {
+		film = filmDAO.updateFilm(film);
 		
-		if (film != null) {
-			editedFilm = filmDAO.updateFilm(film);
-			mv.addObject("film", editedFilm);
-		} else {
-			mv.addObject("Error updating data");
-		}
-		mv.setViewName("result.jsp");
-		
-		return mv;
+		return "redirect:/home.do";
 		
 	}
 	
 	
-	@PostMapping("/deleteFilm")
+	@PostMapping("/deleteFilm.do")
 	public String deleteFilm(@RequestParam("id") int id, Model model) {
 		boolean deleted = filmDAO.deleteFilmById(id);
 		if (deleted) {
@@ -115,6 +105,6 @@ public class FilmController {
 		} else {
 			model.addAttribute("message", "film could not be deleted");
 		}
-		return "redirect:/searchFilms";
+		return "redirect:/home.do";
 	}
 }

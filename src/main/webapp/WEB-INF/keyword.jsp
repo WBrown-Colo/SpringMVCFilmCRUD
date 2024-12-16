@@ -31,13 +31,13 @@
 					<li><strong>Actors:</strong> ${film.actors}</li>
 
 					<!--DELETE FORM -->
-					<form action="deleteFilm" method="post">
+					<form action="deleteFilm.do" method="post">
 						<input type="hidden" name="id" value="${film.id}" /> <input
 							type="submit" value="Delete">
 					</form>
 
 					<!-- EDIT FORM -->
-					<form action="editFilm" method="post">
+					<form action="editFilm.do" method="post">
 						<input type="hidden" name="id" value="${film.id}" /> <input
 							type="submit" value="Edit">
 					</form>
