@@ -76,13 +76,14 @@ public class FilmController {
 	@RequestMapping(path = "addfilm.do", method = RequestMethod.POST)
 	public ModelAndView addFilm(Film film) {
 		ModelAndView mv = new ModelAndView();
+		filmDAO.addFilm(film);
 		
 		if (film.getId() != 0) {
 			mv.addObject("AddedFilm");
 		} else {
 			mv.addObject("Error adding new film");
 		}
-		mv.setViewName("result.jsp");
+		mv.setViewName("result");
 		
 		return mv;
 	}

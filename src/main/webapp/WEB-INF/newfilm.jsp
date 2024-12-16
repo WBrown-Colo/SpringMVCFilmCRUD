@@ -32,9 +32,9 @@
 				<option value="NC-17">NC-17</option>
 				<!-- </optgroup> -->
 			</select><br> 
+			<input type="submit" value="Add Film">
 		</form>
 		<form action="home.do" method="GET">
-			<input type="submit" value="Add Film">
 		</form>
 	</fieldset>
 
