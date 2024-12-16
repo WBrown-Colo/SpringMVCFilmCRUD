@@ -73,30 +73,76 @@ public class FilmDAOImpl implements FilmDAO {
 
 //______________________________________________________________________________________________________________________
 
+//	@Override
+//	public Film addFilm(Film film) {
+//		String sql = "INSERT INTO film (title, description, length, rating) VALUES (?, ?, ?, ?)";
+//
+//		try (Connection conn = DriverManager.getConnection(URL, user, pass);
+//				PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+//
+//			stmt.setString(1, film.getTitle());
+//			stmt.setString(2, film.getDescription());
+//			stmt.setInt(3, film.getLength());
+//			stmt.setString(4, film.getRating());
+//
+//			int newRows = stmt.executeUpdate();
+//			if (newRows > 0) {
+//
+//				try (ResultSet keys = stmt.getGeneratedKeys()) {
+//					if (keys.next()) {
+//			
+//					film.setId(keys.getInt(1));
+//			
+//			
+//					}
+//				}
+//			}
+//		}catch (SQLException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//		
+//		
+//		return film;
+//}
 	@Override
-	public Film addFilm(Film film) {
-		String sql = "INSERT INTO film (title, description, length, rating) VALUES (?, ?, ?, ?)";
+	public Film addFilm(Film film) {  //Will's Attempt
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			conn.setAutoCommit(false);
 
-		try (Connection conn = DriverManager.getConnection(URL, user, pass);
-				PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			String sql = "INSERT INTO film (title, description, length, rating) " 
+						+ " VALUES (?, ?, ?, ?)";
 
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getDescription());
 			stmt.setInt(3, film.getLength());
 			stmt.setString(4, film.getRating());
 
-			int newRows = stmt.executeUpdate();
-			if (newRows > 0) {
+			int updateCount = stmt.executeUpdate();
 
-				try (ResultSet keys = stmt.getGeneratedKeys()) {
-					if (keys.next()) {
-						film.setId(keys.getInt(1));
-					}
+			if (updateCount == 1) {
+				ResultSet keys = stmt.getGeneratedKeys();
+				if (keys.next()) {
+					film.setId(keys.getInt(1));
+				}
+			} else {
+				film = null;
+			}
+			conn.commit();
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.err.println("Error trying to rollback");
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+//			throw new RuntimeException("Error inserting film " + film);
 		}
 		return film;
 	}
