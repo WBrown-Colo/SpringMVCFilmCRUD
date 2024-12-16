@@ -6,12 +6,12 @@ import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
 public interface FilmDAO {
-	public Film findFilmById(int id);
+	public List<Actor> findActorsByFilmId(int filmId);
 	public List<Film> findFilmsByKeyword(String keyword);
+	public Film findFilmById(int id);
 	public Film addFilm(Film film);
-	boolean updateFilm(Film film);
-	boolean deleteFilm(int id);
-	List<Actor> findActorsByFilmId(int filmId);
+	public Film updateFilm(Film film);
+	public boolean deleteFilmById(int id);
 }
 	
 

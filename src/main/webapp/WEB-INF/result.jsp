@@ -8,8 +8,8 @@
 <title>MVC Film Site</title>
 </head>
 <body>
-<jsp:include page="homebutton.jsp"/>
-	<h1>Result</h1>
+	<jsp:include page="homebutton.jsp" />
+	<h1>Film ID Result</h1>
 
 	<!-- Message -->
 
@@ -27,14 +27,22 @@
 				<li><strong>Rating:</strong> ${film.rating}</li>
 				<li><strong>Actors:</strong> ${film.actors}</li>
 			</ul>
-			<form action="">
-			Delete: <input type="radio" name="delete" value="delete"><br>
-			Edit: <input type="radio" name="edit" value="edit"><br>
-			<input type="submit" value="Submit">
+
+			<!--DELETE FORM -->
+			<form action="deleteFilm.do" method="post">
+				<input type="hidden" name="id" value="${film.id}" /> <input
+					type="submit" value="Delete">
 			</form>
+
+			<!-- EDIT FORM -->
+			<form action="editFilm.do" method="post">
+				<input type="hidden" name="id" value="${film.id}" /> <input
+					type="submit" value="Edit">
+			</form>
+
 		</c:when>
 		<c:otherwise>
-		<p>No Film found with selected ID.</p>
+			<p>No Film found with selected ID.</p>
 		</c:otherwise>
 	</c:choose>
 </body>
