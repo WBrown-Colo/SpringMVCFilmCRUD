@@ -121,7 +121,40 @@ public class FilmDAOImpl implements FilmDAO {
 	}
 
 //______________________________________________________________________________________________________________________
-
+//	@Override
+//	public Film addFilm(Film film) {  //George's Attempt
+//		String sql = "INSERT INTO film (title, description, length, rating) VALUES (?, ?, ?, ?)";
+//
+//		try (Connection conn = DriverManager.getConnection(URL, user, pass);
+//				PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+//
+//			stmt.setString(1, film.getTitle());
+//			stmt.setString(2, film.getDescription());
+//			stmt.setInt(3, film.getLength());
+//			stmt.setString(4, film.getRating());
+//
+//			int newRows = stmt.executeUpdate();
+//			if (newRows > 0) {
+//
+//				try (ResultSet keys = stmt.getGeneratedKeys()) {
+//					if (keys.next()) {
+//			
+//					film.setId(keys.getInt(1));
+//			
+//			
+//					}
+//				}
+//			}
+//		}catch (SQLException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//		
+//		
+//		return film;
+//}
+	
+	
 	@Override
 	public Film addFilm(Film film) { // Will's Attempt
 		Connection conn = null;
@@ -129,20 +162,24 @@ public class FilmDAOImpl implements FilmDAO {
 			conn = DriverManager.getConnection(URL, user, pass);
 			conn.setAutoCommit(false);
 
-			String sql = "INSERT INTO film (title, description, length, rating) " + " VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO film (title, description, language_id, length, rating) " + " VALUES (?, ?, ?, ?)";
 
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getDescription());
-			stmt.setInt(3, film.getLength());
-			stmt.setString(4, film.getRating());
+			stmt.setInt(3, 1);
+//			stmt.setInt(3, film.getLanguageId());
+			stmt.setInt(4, film.getLength());
+			stmt.setString(5, film.getRating());
+			
 
 			int updateCount = stmt.executeUpdate();
 
 			if (updateCount == 1) {
 				ResultSet keys = stmt.getGeneratedKeys();
 				if (keys.next()) {
-					film.setId(keys.getInt(1));
+					int filmId = keys.getInt(1);
+					film.setId(filmId);
 				}
 			} else {
 				film = null;
