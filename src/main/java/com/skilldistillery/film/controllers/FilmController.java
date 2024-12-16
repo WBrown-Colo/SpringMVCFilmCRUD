@@ -105,13 +105,24 @@ public class FilmController {
 	
 	
 	@PostMapping("/deleteFilm.do")
-	public String deleteFilm(@RequestParam("id") int id, Model model) {
+	public String deleteFilm(@RequestParam("id") Integer id, Model model) {
+		try {
+			if (id == null || id <= 0) {
+				model.addAttribute("message", "Invalid Film ID. Enter Valid Film ID");
+				return "deleteFilm";
+			}
+		
+		
 		boolean deleted = filmDAO.deleteFilmById(id);
 		if (deleted) {
 			model.addAttribute("message", "film deleted successfully");
 		} else {
 			model.addAttribute("message", "film could not be deleted");
 		}
-		return "redirect:/home.do";
+	} catch (Exception e) {
+		model.addAttribute("message", "Error occured attempting to delete film");
+		e.printStackTrace();
+	}
+		return "deleteFilm";
 	}
 }
