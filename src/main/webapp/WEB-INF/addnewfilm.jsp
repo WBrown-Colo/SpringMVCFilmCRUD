@@ -18,6 +18,7 @@
 	<p>You added a film to the database!</p>
 	<strong>ID:</strong> ${film.id}<br>
 	<strong>Title: </strong>${film.title } | <strong>Description: </strong>${film.description }<br>
+	<strong>Language: </strong> ${film.language } <br>
 	<strong>Length: </strong>${film.length } minutes | <strong>Rating: </strong>(${film.rating })
 </c:when>
 <c:otherwise>
