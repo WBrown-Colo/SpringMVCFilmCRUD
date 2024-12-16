@@ -74,7 +74,7 @@ public class FilmDAOImpl implements FilmDAO {
 //______________________________________________________________________________________________________________________
 
 //	@Override
-//	public Film addFilm(Film film) {
+//	public Film addFilm(Film film) {  //George's Attempt
 //		String sql = "INSERT INTO film (title, description, length, rating) VALUES (?, ?, ?, ?)";
 //
 //		try (Connection conn = DriverManager.getConnection(URL, user, pass);
@@ -126,7 +126,8 @@ public class FilmDAOImpl implements FilmDAO {
 			if (updateCount == 1) {
 				ResultSet keys = stmt.getGeneratedKeys();
 				if (keys.next()) {
-					film.setId(keys.getInt(1));
+					int filmId = keys.getInt(1);
+					film.setId(filmId);
 				}
 			} else {
 				film = null;
