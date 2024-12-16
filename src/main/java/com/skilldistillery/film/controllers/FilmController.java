@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.skilldistillery.film.data.FilmDAO;
 import com.skilldistillery.film.entities.Film;
@@ -72,43 +75,46 @@ public class FilmController {
 	}
 
 	@RequestMapping(path = "addfilm.do", method = RequestMethod.POST)
-	public String addFilm(Film film, Model model) {
-		Film filmAdded = filmDAO.addFilm(film);
-		if (filmAdded != null) {
-			model.addAttribute("film", filmAdded);
-			model.addAttribute("message", "film added");
+	public ModelAndView addFilm(Film film) {
+		ModelAndView mv = new ModelAndView();
+		
+		if (film.getId() != 0) {
+			mv.addObject("AddedFilm");
 		} else {
-			model.addAttribute("message", "film not added");
+			mv.addObject("Error adding new film");
 		}
-
-		// return "WEB-INF/home.jsp";
-		return "addnewfilm";
+		mv.setViewName("result.jsp");
+		
+		return mv;
 	}
 	
-	@RequestMapping(path = "deletefilm.do", method = RequestMethod.POST)
+
+	@RequestMapping(path = "editFilm.do", method = RequestMethod.POST)
+	public ModelAndView editFilmForm(@ModelAttribute("film") Film film) {
+		ModelAndView mv = new ModelAndView();
+		Film editedFilm;
+		
+		if (film != null) {
+			editedFilm = filmDAO.updateFilm(film);
+			mv.addObject("film", editedFilm);
+		} else {
+			mv.addObject("Error updating data");
+		}
+		mv.setViewName("result.jsp");
+		
+		return mv;
+		
+	}
+	
+	
+	@PostMapping("/deleteFilm")
 	public String deleteFilm(@RequestParam("id") int id, Model model) {
-		boolean deleted = filmDAO.deleteFilm(id);
+		boolean deleted = filmDAO.deleteFilmById(id);
 		if (deleted) {
 			model.addAttribute("message", "film deleted successfully");
 		} else {
 			model.addAttribute("message", "film could not be deleted");
 		}
-
-		// return "WEB-INF/home.jsp";
-		return "editordelete";
+		return "redirect:/searchFilms";
 	}
-
-	@RequestMapping(path = "editfilm.do", method = RequestMethod.POST)
-	public String editFilm(Film film, Model model) {
-		boolean updated = filmDAO.updateFilm(film);
-		if (updated) {
-			model.addAttribute("message", "film updated successfully");
-		} else {
-			model.addAttribute("message", "film could not be updated");
-		}
-
-		// return "WEB-INF/home.jsp";
-		return "editordelete";
-	}
-	
 }

@@ -29,26 +29,21 @@
 					<li><strong>Length:</strong> ${film.length}</li>
 					<li><strong>Rating:</strong> ${film.rating}</li>
 					<li><strong>Actors:</strong> ${film.actors}</li>
-		
-		<!--TRYING SOMETHING OUT -->	
-		<!-- 	<form action="">
-			<input type="submit" value="Delete">		
-			</form>
-			<form action="">
-			<input type="submit" value="Edit">		
-			</form> -->
-		<!------------------------  -->
-			
-			<form action="">
-			Delete:<input type="radio" name="delete" value="delete"><br>
-			Edit: <input type="radio" name="edit" value="edit"><br>
-			<input type="submit" value="Submit">
-			</form>
-			
-			
+
+					<!--DELETE FORM -->
+					<form action="deleteFilm" method="post">
+						<input type="hidden" name="id" value="${film.id}" /> <input
+							type="submit" value="Delete">
+					</form>
+
+					<!-- EDIT FORM -->
+					<form action="editFilm" method="post">
+						<input type="hidden" name="id" value="${film.id}" /> <input
+							type="submit" value="Edit">
+					</form>
+
 				</c:forEach>
 			</ul>
-			
 		</c:when>
 		<c:otherwise>
 			<p>No Films found for the given keyword.</p>

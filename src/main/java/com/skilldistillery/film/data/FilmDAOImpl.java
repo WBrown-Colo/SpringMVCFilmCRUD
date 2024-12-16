@@ -24,18 +24,96 @@ public class FilmDAOImpl implements FilmDAO {
 //______________________________________________________________________________________________________________________
 
 	@Override
+	public List<Actor> findActorsByFilmId(int filmId) {
+		List<Actor> cast = new ArrayList<>();
+		Actor actor = null;
+
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+			String sql = "SELECT actor.id, first_name, last_name" + " FROM actor"
+					+ " JOIN film_actor ON actor.id = film_actor.actor_id" + " WHERE film_actor.film_id = ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, filmId);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String firstName = rs.getString("first_name");
+				String lastName = rs.getString("last_name");
+				actor = new Actor(id, firstName, lastName);
+
+				cast.add(actor);
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		}
+
+		catch (SQLException sqle) {
+			System.err.println("Error getting actor " + filmId);
+			sqle.printStackTrace();
+		}
+
+		return cast;
+	}
+
+//______________________________________________________________________________________________________________________
+
+	@Override
+	public List<Film> findFilmsByKeyword(String keyword) {
+		List<Film> films = new ArrayList<>();
+		keyword = "%" + keyword + "%";
+
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+			String sql = "SELECT * FROM film WHERE title LIKE ? OR description LIKE ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, keyword);
+			stmt.setString(2, keyword);
+			ResultSet rs = stmt.executeQuery();
+			// TEST by Will - Keyword search not working
+//			stmt.setString(1, keyword);
+//			stmt.setString(2, keyword);
+
+			while (rs.next()) {
+				Film film = new Film();
+				films.add(populateFilmFromResultSet(rs));
+
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return films;
+	}
+	
+
+//______________________________________________________________________________________________________________________
+
+	@Override
 	public Film findFilmById(int id) {
 		Film film = null;
-		String sql = "SELECT * FROM film WHERE id = ?";
-		try (Connection conn = DriverManager.getConnection(URL, user, pass);
-				PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+			String sql = "SELECT * FROM film WHERE id = ?";
 
+			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
-			try (ResultSet rs = stmt.executeQuery()) {
-				if (rs.next()) {
-					film = populateFilmFromResultSet(rs);
-				}
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				film = new Film();
+				film = populateFilmFromResultSet(rs);
 			}
+			rs.close();
+			stmt.close();
+			conn.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -45,75 +123,13 @@ public class FilmDAOImpl implements FilmDAO {
 //______________________________________________________________________________________________________________________
 
 	@Override
-	public List<Film> findFilmsByKeyword(String keyword) {
-		List<Film> films = new ArrayList<>();
-		String sql = "SELECT * FROM film WHERE title LIKE ? OR description LIKE ?";
-
-		try (Connection conn = DriverManager.getConnection(URL, user, pass);
-				PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-			keyword = "%" + keyword + "%";
-			stmt.setString(1, "%" + keyword + "%");
-			stmt.setString(2, "%" + keyword + "%");
-
-			// TEST by Will - Keyword search not working
-//			stmt.setString(1, keyword);
-//			stmt.setString(2, keyword);
-
-			try (ResultSet rs = stmt.executeQuery()) {
-				while (rs.next()) {
-					films.add(populateFilmFromResultSet(rs));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return films;
-	}
-
-//______________________________________________________________________________________________________________________
-
-//	@Override
-//	public Film addFilm(Film film) {
-//		String sql = "INSERT INTO film (title, description, length, rating) VALUES (?, ?, ?, ?)";
-//
-//		try (Connection conn = DriverManager.getConnection(URL, user, pass);
-//				PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-//
-//			stmt.setString(1, film.getTitle());
-//			stmt.setString(2, film.getDescription());
-//			stmt.setInt(3, film.getLength());
-//			stmt.setString(4, film.getRating());
-//
-//			int newRows = stmt.executeUpdate();
-//			if (newRows > 0) {
-//
-//				try (ResultSet keys = stmt.getGeneratedKeys()) {
-//					if (keys.next()) {
-//			
-//					film.setId(keys.getInt(1));
-//			
-//			
-//					}
-//				}
-//			}
-//		}catch (SQLException e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//		
-//		
-//		return film;
-//}
-	@Override
-	public Film addFilm(Film film) {  //Will's Attempt
+	public Film addFilm(Film film) { // Will's Attempt
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, user, pass);
 			conn.setAutoCommit(false);
 
-			String sql = "INSERT INTO film (title, description, length, rating) " 
-						+ " VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO film (title, description, length, rating) " + " VALUES (?, ?, ?, ?)";
 
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
@@ -150,7 +166,7 @@ public class FilmDAOImpl implements FilmDAO {
 //______________________________________________________________________________________________________________________
 
 	@Override
-	public boolean updateFilm(Film film) {
+	public Film updateFilm(Film film) {
 		String sql = "UPDATE film SET id = ?, title = ?, description = ?, length = ?, rating = ?";
 
 		try (Connection conn = DriverManager.getConnection(URL, user, pass);
@@ -160,29 +176,27 @@ public class FilmDAOImpl implements FilmDAO {
 			stmt.setString(2, film.getDescription());
 			stmt.setInt(3, film.getLength());
 			stmt.setString(4, film.getRating());
+			stmt.setInt(5, film.getId());
 
-			int newRows = stmt.executeUpdate();
-			return newRows > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return film ;
 		}
+		return film;
 	}
 
 //______________________________________________________________________________________________________________________
 
 	@Override
-	public boolean deleteFilm(int id) {
+	public boolean deleteFilmById(int id) {
 		String sql = "DELETE FROM film WHERE id = ?";
 
 		try (Connection conn = DriverManager.getConnection(URL, user, pass);
 				PreparedStatement stmt = conn.prepareStatement(sql)) {
 
 			stmt.setInt(1, id);
-			int newRows = stmt.executeUpdate();
-			return newRows > 0;
+			return stmt.executeUpdate() > 0;
 		} catch (SQLException e) {
-			System.err.println("Error Deleting Film: " + e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
@@ -214,40 +228,5 @@ public class FilmDAOImpl implements FilmDAO {
 	}
 
 //______________________________________________________________________________________________________________________
-
-	@Override
-	public List<Actor> findActorsByFilmId(int filmId) {
-		List<Actor> cast = new ArrayList<>();
-		Actor actor = null;
-
-		try {
-			Connection conn = DriverManager.getConnection(URL, user, pass);
-			String sql = "SELECT actor.id, first_name, last_name" + " FROM actor"
-					+ " JOIN film_actor ON actor.id = film_actor.actor_id" + " WHERE film_actor.film_id = ?";
-
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, filmId);
-			ResultSet rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				int id = rs.getInt(1);
-				String firstName = rs.getString("first_name");
-				String lastName = rs.getString("last_name");
-				actor = new Actor(id, firstName, lastName);
-
-				cast.add(actor);
-			}
-			rs.close();
-			stmt.close();
-			conn.close();
-		}
-
-		catch (SQLException sqle) {
-			System.err.println("Error getting actor " + filmId);
-			sqle.printStackTrace();
-		}
-
-		return cast;
-	}
 
 }
