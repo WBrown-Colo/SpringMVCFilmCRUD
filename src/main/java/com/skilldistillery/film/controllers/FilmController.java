@@ -88,11 +88,18 @@ public class FilmController {
 	}
 	
 
-	@PostMapping(path = {"editFilm.do"})
+	@PostMapping("/editFilm.do")
 	public String updatedFilm(Film film, Model model) {
-		film = filmDAO.updateFilm(film);
+		Film updatedFilm = filmDAO.updateFilm(film);
 		
-		return "redirect:/home.do";
+		if (updatedFilm != null) {
+			model.addAttribute("message", "Film updated successfully");
+			model.addAttribute("film", updatedFilm);
+		} else {
+			model.addAttribute("message", "Film not updated");
+		}
+		
+		return "updateFilm";
 		
 	}
 	

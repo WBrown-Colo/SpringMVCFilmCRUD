@@ -28,7 +28,7 @@
 				<option value="R">R</option>
 				<option value="NC-17">NC-17</option>
 				<!-- </optgroup> -->
-			</select><br> <input type="submit" value="Add Film">
+			</select><br> 
 		</form>
 		<form action="home.do" method="GET">
 			<input type="submit" value="Add Film">

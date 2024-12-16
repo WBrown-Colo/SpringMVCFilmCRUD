@@ -8,6 +8,7 @@
 <title>Edit Film</title>
 </head>
 <body>
+<jsp:include page="homebutton.jsp" />
 	<h1>Edit Film Details</h1>
 	<c:if test="${error != null}">
 		<p style="color: green;">${error}</p>
@@ -29,9 +30,6 @@
 			Rating: <input type="text" name="rating" value="${film.rating}" />
 		</p>
 		<button type="submit">Save Changes</button>
-	</form>
-	<form action="home.do" method="GET">
-		<input type="submit" value="Home Page">
-	</form>
+		</form>
 </body>
 </html>

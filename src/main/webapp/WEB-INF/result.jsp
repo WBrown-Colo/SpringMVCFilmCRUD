@@ -9,7 +9,7 @@
 </head>
 <body>
 	<jsp:include page="homebutton.jsp" />
-	<h1>Result</h1>
+	<h1>Film ID Result</h1>
 
 	<!-- Message -->
 
