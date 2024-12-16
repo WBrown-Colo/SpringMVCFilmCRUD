@@ -27,6 +27,16 @@
 				<li><strong>Rating:</strong> ${film.rating}</li>
 				<li><strong>Actors:</strong> ${film.actors}</li>
 			</ul>
+			
+			<!--TRYING SOMETHING OUT -->	
+			<!-- <form action="deletefilm.do" method="post">
+			<input type="submit" value="Delete">		
+			</form>
+			<form action="editfilm.do" method="post">
+			<input type="submit" value="Edit">		
+			</form> -->
+			<!-------------------------------->
+			
 			<form action="">
 			Delete: <input type="radio" name="delete" value="delete"><br>
 			Edit: <input type="radio" name="edit" value="edit"><br>

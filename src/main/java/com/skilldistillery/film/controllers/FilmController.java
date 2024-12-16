@@ -95,7 +95,7 @@ public class FilmController {
 		}
 
 		// return "WEB-INF/home.jsp";
-		return "result";
+		return "editordelete";
 	}
 
 	@RequestMapping(path = "editfilm.do", method = RequestMethod.POST)
@@ -108,7 +108,7 @@ public class FilmController {
 		}
 
 		// return "WEB-INF/home.jsp";
-		return "result";
+		return "editordelete";
 	}
 	
 }
